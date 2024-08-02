@@ -1,24 +1,28 @@
-//
-//  ContentView.swift
-//  Website Viewer
-//
-//  Created by Joshua Brooks on 8/1/24.
-//
-
 import SwiftUI
+import WebKit
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        WebView(url: URL(string: "https://www.fox.com")!)
+            .edgesIgnoringSafeArea(.all)
     }
 }
 
-#Preview {
-    ContentView()
+struct WebView: UIViewRepresentable {
+    let url: URL
+
+    func makeUIView(context: Context) -> WKWebView {
+        return WKWebView()
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        let request = URLRequest(url: url)
+        uiView.load(request)
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
